@@ -6,7 +6,8 @@ const isPasswordValid = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?
 
 if(!isEmailValid) return "Email ID is not valid !";
 if(!isPasswordValid) return "Password is not valid !";
-if(name.length === 0) return "Please enter name";
+if(name === null) return null;
+else if(name.length === 0 ) return "Please enter name";
 
 return null;
 

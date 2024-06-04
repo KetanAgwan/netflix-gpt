@@ -1,5 +1,7 @@
 import React, { useRef, useState } from "react";
-import handleValidation from "../utils/handleValidation";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../utils/firebase";
+import checkValidData from "../utils/validate";
 
 const SignUpForm = ({ toggleForm }) => {
   const name = useRef(null);
@@ -8,8 +10,38 @@ const SignUpForm = ({ toggleForm }) => {
 
   const [errorMsg, setErrorMsg] = useState(null);
 
-  const handleError = () => {
-    setErrorMsg(handleValidation(email.current.value, password.current.value,name.current.value));
+  const handleSignUp = () => {
+    const message = checkValidData(
+      email.current.value,
+      password.current.value,
+      name.current.value
+    );
+    setErrorMsg(message);
+
+    if (message === null) {
+      //signUP logic
+      signUpUser();
+    } else {
+      return;
+    }
+  };
+
+  const signUpUser = () => {
+    createUserWithEmailAndPassword(
+      auth,
+      email.current.value,
+      password.current.value
+    )
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setErrorMsg(errorCode + " : " + errorMessage);
+      });
   };
 
   return (
@@ -42,7 +74,7 @@ const SignUpForm = ({ toggleForm }) => {
       <button
         type="submit"
         className="text-white py-2 w-4/5 rounded-md bg-red-600"
-        onClick={handleError}
+        onClick={handleSignUp}
       >
         SignUp
       </button>

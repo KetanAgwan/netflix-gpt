@@ -1,5 +1,7 @@
 import React, { useRef, useState } from "react";
-import handleValidation from "../utils/handleValidation";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../utils/firebase";
+import checkValidData from "../utils/validate";
 
 const LoginForm = ({ toggleForm }) => {
   const email = useRef(null);
@@ -7,8 +9,37 @@ const LoginForm = ({ toggleForm }) => {
 
   const [errorMsg, setErrorMsg] = useState(null);
 
-  const handleError = () => {
-    setErrorMsg(handleValidation(email.current.value, password.current.value,"Default name"));
+  const handleLogin = () => {
+    const message = checkValidData(
+      email.current.value,
+      password.current.value,
+      null
+    );
+    setErrorMsg(message);
+    if (message === null) {
+      //signIn
+      signInUser();
+    } else {
+      return;
+    }
+  };
+
+  const signInUser = () => {
+    signInWithEmailAndPassword(auth,
+      email.current.value,
+      password.current.value)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user);
+        console.log("Login sucess");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setErrorMsg(errorCode + " : " + errorMessage);
+        console.log("login failed");
+      });
   };
 
   return (
@@ -35,7 +66,7 @@ const LoginForm = ({ toggleForm }) => {
       <button
         type="submit"
         className="text-white py-2 w-4/5 rounded-md bg-red-600"
-        onClick={handleError}
+        onClick={handleLogin}
       >
         SignIn
       </button>
