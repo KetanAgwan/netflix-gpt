@@ -27,9 +27,11 @@ const LoginForm = ({ toggleForm }) => {
   };
 
   const signInUser = () => {
-    signInWithEmailAndPassword(auth,
+    signInWithEmailAndPassword(
+      auth,
       email.current.value,
-      password.current.value)
+      password.current.value
+    )
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
@@ -39,8 +41,11 @@ const LoginForm = ({ toggleForm }) => {
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
-        setErrorMsg(errorCode + " : " + errorMessage);
+        setErrorMsg(
+          errorCode === "auth/invalid-credential"
+            ? "Invalid Credentials"
+            : "Something went wrong"
+        );
         console.log("login failed");
         navigate("/");
       });

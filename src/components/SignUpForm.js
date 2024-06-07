@@ -1,12 +1,17 @@
 import React, { useRef, useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import checkValidData from "../utils/validate";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const SignUpForm = ({ toggleForm }) => {
   const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [errorMsg, setErrorMsg] = useState(null);
 
@@ -35,12 +40,30 @@ const SignUpForm = ({ toggleForm }) => {
       .then((userCredential) => {
         // Signed up
         const user = userCredential.user;
-        console.log(user);
+        updateProfile(user, {
+          displayName: name.current.value,
+          photoURL: "https://avatars.githubusercontent.com/u/115089669?v=4",
+        })
+          .then(() => {
+            const { uid, email, displayName , photoURL } = auth.currentUser;
+        dispatch(addUser({ uid: uid, email: email, displayName: displayName , photoURL : photoURL}));
+            // Profile updated!
+            navigate("/browse");
+            console.log(user);
+          })
+          .catch((error) => {
+            // An error occurred
+            console.log(error);
+          });
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
-        setErrorMsg(errorCode + " : " + errorMessage);
+        setErrorMsg(
+          errorCode === "auth/invalid-credential"
+            ? "Invalid Credentials"
+            : "Something went wrong"
+        );
+        navigate("/");
       });
   };
 
