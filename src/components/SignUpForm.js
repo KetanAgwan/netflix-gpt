@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import checkValidData from "../utils/validate";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 
@@ -10,7 +9,6 @@ const SignUpForm = ({ toggleForm }) => {
   const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [errorMsg, setErrorMsg] = useState(null);
@@ -68,7 +66,6 @@ const SignUpForm = ({ toggleForm }) => {
             ? "Invalid Credentials"
             : "Something went wrong"
         );
-        navigate("/");
       });
   };
 

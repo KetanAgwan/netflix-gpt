@@ -2,13 +2,10 @@ import React, { useRef, useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import checkValidData from "../utils/validate";
-import { useNavigate } from "react-router-dom";
 
 const LoginForm = ({ toggleForm }) => {
   const email = useRef(null);
   const password = useRef(null);
-  const navigate = useNavigate();
-
   const [errorMsg, setErrorMsg] = useState(null);
 
   const handleLogin = () => {
@@ -37,7 +34,6 @@ const LoginForm = ({ toggleForm }) => {
         const user = userCredential.user;
         console.log(user);
         console.log("Login sucess");
-        navigate("/browse");
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -47,7 +43,6 @@ const LoginForm = ({ toggleForm }) => {
             : "Something went wrong"
         );
         console.log("login failed");
-        navigate("/");
       });
   };
 
