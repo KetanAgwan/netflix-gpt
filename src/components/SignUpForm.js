@@ -45,11 +45,16 @@ const SignUpForm = ({ toggleForm }) => {
           photoURL: "https://avatars.githubusercontent.com/u/115089669?v=4",
         })
           .then(() => {
-            const { uid, email, displayName , photoURL } = auth.currentUser;
-        dispatch(addUser({ uid: uid, email: email, displayName: displayName , photoURL : photoURL}));
+            const { uid, email, displayName, photoURL } = auth.currentUser;
+            dispatch(
+              addUser({
+                uid: uid,
+                email: email,
+                displayName: displayName,
+                photoURL: photoURL,
+              })
+            );
             // Profile updated!
-            navigate("/browse");
-            console.log(user);
           })
           .catch((error) => {
             // An error occurred
