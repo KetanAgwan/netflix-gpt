@@ -16,6 +16,7 @@
 - implemented signOut
 - Update profile API
 - BugFix - if user not logged in redirect /browse to Login page and vice-versa
+- Unsubscribed to the onAuthStateChange callback.
 
 # Features
 
