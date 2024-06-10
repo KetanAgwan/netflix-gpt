@@ -17,6 +17,8 @@
 - Update profile API
 - BugFix - if user not logged in redirect /browse to Login page and vice-versa
 - Unsubscribed to the onAuthStateChange callback.
+- Register TMDB API & create an app & get acess token
+- Get data form TMDB now playing movies list API
 
 # Features
 

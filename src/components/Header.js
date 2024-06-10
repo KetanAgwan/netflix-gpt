@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { addUser, removeUser } from "../utils/userSlice";
+import { LOGO_URL } from "../utils/constants";
 
 // https://wallpapers.com/images/thumbnail/netflix-profile-pictures-1000-x-1000-qo9h82134t9nv0j0.webp
 
@@ -25,7 +26,7 @@ const Header = () => {
   };
 
   useEffect(() => {
-   const unsubscribe =  onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName, photoURL } = user;
         dispatch(
@@ -36,26 +37,21 @@ const Header = () => {
             photoURL: photoURL,
           })
         );
-        navigate("/browse")
+        navigate("/browse");
       } else {
         dispatch(removeUser());
         navigate("/");
       }
     });
 
-
-    // Unsubscribe when the header component unmounts 
+    // Unsubscribe when the header component unmounts
     return () => unsubscribe();
   }, []);
 
   return (
     <div className="absolute z-10 h-28 w-full bg-gradient-to-b from-black flex items-center justify-between">
       <div className="h-full">
-        <img
-          className="h-3/4 w-auto mx-24 my-5"
-          src="https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
-          alt="logo"
-        />
+        <img className="h-3/4 w-auto mx-24 my-5" src={LOGO_URL} alt="logo" />
       </div>
       {user && (
         <div className=" h-full flex items-center justify-center p-3 gap-3">

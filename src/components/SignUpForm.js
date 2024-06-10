@@ -4,6 +4,7 @@ import { auth } from "../utils/firebase";
 import checkValidData from "../utils/validate";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { USER_AVATAR } from "../utils/constants";
 
 const SignUpForm = ({ toggleForm }) => {
   const name = useRef(null);
@@ -40,7 +41,7 @@ const SignUpForm = ({ toggleForm }) => {
         const user = userCredential.user;
         updateProfile(user, {
           displayName: name.current.value,
-          photoURL: "https://avatars.githubusercontent.com/u/115089669?v=4",
+          photoURL: USER_AVATAR,
         })
           .then(() => {
             const { uid, email, displayName, photoURL } = auth.currentUser;
@@ -64,6 +65,8 @@ const SignUpForm = ({ toggleForm }) => {
         setErrorMsg(
           errorCode === "auth/invalid-credential"
             ? "Invalid Credentials"
+            : errorCode === "auth/email-already-in-use"
+            ? "Email is already in use"
             : "Something went wrong"
         );
       });
