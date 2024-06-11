@@ -32,7 +32,7 @@ const LoginForm = ({ toggleForm }) => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        console.log(user);
+        // console.log(user);
         console.log("Login sucess");
       })
       .catch((error) => {

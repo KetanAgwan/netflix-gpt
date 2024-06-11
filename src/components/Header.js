@@ -49,7 +49,7 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="absolute z-10 h-28 w-full bg-gradient-to-b from-black flex items-center justify-between">
+    <div className="absolute z-20 h-28 w-full bg-gradient-to-b from-black flex items-center justify-between">
       <div className="h-full">
         <img className="h-3/4 w-auto mx-24 my-5" src={LOGO_URL} alt="logo" />
       </div>

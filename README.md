@@ -19,6 +19,14 @@
 - Unsubscribed to the onAuthStateChange callback.
 - Register TMDB API & create an app & get acess token
 - Get data form TMDB now playing movies list API
+- Created custome Hook for now playing movies
+- created a movies slice
+- Updated the store with now playin movies data
+- Fetched data for the trailer video
+- Updated the store with the trailer video data
+- Crreated the custome Hook for fetching the trailer video data
+- Empbedde the YouTube video iframe
+- Made the browse page hero section UI with video in background
 
 # Features
 
